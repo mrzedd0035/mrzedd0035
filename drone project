@@ -1,0 +1,48 @@
+from codrone_edu.drone import *
+import time
+from random import randint
+
+drone = Drone()
+drone.pair()
+drone.takeoff()
+for i in range(3):
+
+#색상제어
+    drone.set_drone_LED(255, 0, 0, 100) # 빨간색
+    time.sleep(1)
+
+    drone.set_drone_LED(0, 255, 0, 100) # 초록색
+    time.sleep(1)
+
+    drone.set_drone_LED(0, 0, 255, 100) # 파란색
+    time.sleep(1)
+
+# 멜로디 연주      
+notes = [
+    Note.C4, Note.C4, Note.G4, Note.G4,
+    Note.A4, Note.A4, Note.G4,
+    Note.F4, Note.F4, Note.E4, Note.E4,
+    Note.D4, Note.D4, Note.C4
+]
+
+duration = [
+    250, 250, 250, 250,
+    250, 250, 500,
+    250, 250, 250, 250,
+    250, 250, 500
+]
+
+for i in range(len(duration)):
+    drone.drone_buzzer(notes[i], duration[i]) 
+
+#비행
+drone.set_throttle(20)
+drone.move(4)
+drone.set_throttle(0)
+drone.set_pitch(20)
+drone.set_yaw(40)
+drone.set_throttle(-20)
+drone.move(12)
+    
+drone.land()
+drone.close()
